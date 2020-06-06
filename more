@@ -1,0 +1,194 @@
+class Sequence {
+	int begin;
+	int end;
+public:
+	Sequence() {
+		begin = 2;
+		end = 50;
+	}
+
+	Sequence(int _begin, int _end) {
+		begin = _begin;
+		end = _end;
+	}
+
+	Sequence(Sequence const& other) {
+		begin = other.begin;
+		end = other.end;
+	}
+
+	int getBegin() {
+		return begin;
+	}
+
+	int getEnd() {
+		return end;
+	}
+
+	void setBegin(int _begin) {
+		begin = _begin;
+	}
+
+	void setEnd(int _end) {
+		end = _end;
+	}
+
+	int count() {
+		return (end - begin);
+	}
+
+	int sum() {
+		return (end * (end + 2) / 2 + begin * (begin - 2) / 2);
+	}
+
+	int avg() {
+		return(sum() / count());
+	}
+
+	void print() {
+		cout << "The first num is " << begin << endl;
+		cout << "The last num is " << end << endl;
+		cout << "Their sum is " << sum() << endl;
+	}
+};
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+class Human {
+	char *fName;
+	char *lName;
+public:
+	Human()
+	{
+		fName = NULL;
+		lName = NULL;
+	}
+
+	Human(char *_fName, char *_lName)
+	
+	{
+		this->fName = new char[strlen(fName) + 1];
+		strcpy_s(this->fName, sizeof this->fName, fName);
+		this->lName = new char[strlen(lName) + 1];
+		strcpy_s(this->lName, sizeof this->lName, lName);
+	}
+
+	~Human() {
+		delete[]fName;
+		delete[]lName;
+	}
+
+	Human& operator=(Human const other) {
+		if (this != &other) {
+			delete[]fName;
+			this->fName = new char[strlen(other.fName) + 1];
+			strcpy_s(this->fName, sizeof this->fName, other.fName);
+		}
+
+		if (this != &other) {
+			delete[]lName;
+			this->lName = new char[strlen(other.lName) + 1];
+			strcpy_s(this->lName, sizeof this->lName, other.lName);
+		}
+	}
+
+	void copy(Human const&other) {
+		this->fName = new char[strlen(fName) + 1];
+		strcpy_s(this->fName, sizeof this->fName, fName);
+		this->lName = new char[strlen(lName) + 1];
+		strcpy_s(this->lName, sizeof this->lName, lName);
+	}
+
+	void print() {
+		cout << "The first name of the person is " << endl;
+		if (fName != NULL)
+		{
+			for (int i = 0; i <= strlen(fName);i++)
+				cout << fName[i];
+		}
+		else
+			cout << "No name" << endl;
+
+
+		cout << "The last name of the person is " << endl;
+		if (lName != NULL)
+		{
+			for (int i = 0; i <= strlen(lName); i++)
+				cout << lName[i];
+		}
+		else
+			cout << "No name" << endl;
+
+	}
+};
+
+class Student : Human {
+	double grade;
+public:
+	Student() : Human() {
+		grade = 2;
+	}
+
+	Student(char *_fName, char *_lName, double _grade) 
+	: Human(_fName, _lName) {
+		grade = _grade;
+	}
+
+	void print() {
+		Human::print();
+		cout << "The grade of this person is " << grade << endl;
+	}
+};
+
+class Worker : Human {
+	double WeekSalary;
+	double WorkHoursPerDay;
+public:
+	Worker() : Human() {
+		WeekSalary = 100;
+		WorkHoursPerDay = 8;
+	}
+
+	Worker(char *_fName, char *_lName, double salary, double hours) :
+	Human(_fName, _lName) {
+		WeekSalary = salary;
+		WorkHoursPerDay = hours;
+	}
+
+	void copy(Worker const & other) {
+		WeekSalary = other.WeekSalary;
+		WorkHoursPerDay = other.WorkHoursPerDay;
+	}
+
+	int getSalary() {
+		return WeekSalary;
+	}
+
+	int getHours() {
+		return WorkHoursPerDay;
+	}
+
+	void setSalary(int salary) {
+		WeekSalary = salary;
+	}
+
+	void setHours(int hours) {
+		WorkHoursPerDay = hours;
+	}
+
+	int MoneyPerHour() {
+		return (WeekSalary / WorkHoursPerDay);
+	}
+
+	int SalaryPerMonth() {
+		return(WeekSalary * 4);
+	}
+
+	void print()
+	{
+		Human::print();
+		cout << "This person works " << WorkHoursPerDay << " per a day" << endl;
+		cout << "His week salary is " << WeekSalary << endl;
+		cout << "His salary per month is " << SalaryPerMonth() << endl;
+	}
+};
